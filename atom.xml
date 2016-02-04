@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[Hexo]]></title>
+  <title><![CDATA[Boldijar Paul]]></title>
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2016-02-04T07:52:35.460Z</updated>
+  <updated>2016-02-04T08:03:59.695Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
-    <name><![CDATA[John Doe]]></name>
+    <name><![CDATA[Boldijar Paul]]></name>
     
   </author>
   
@@ -16,11 +16,11 @@
   
   <entry>
     <title><![CDATA[About me]]></title>
-    <link href="http://yoursite.com/2016/02/03/about-me/"/>
-    <id>http://yoursite.com/2016/02/03/about-me/</id>
-    <published>2016-02-04T07:52:35.460Z</published>
-    <updated>2016-02-04T07:52:35.460Z</updated>
-    <content type="html"><![CDATA[<p>I’m an 19 years old mobile developer from Cluj Napoca, RomÃ¢nia, developing mobile apps, games, and restful web services.<br>In the nearby future, I’m thinking about getting more into iOS development, with Swift, to achive one of my goals, being able to develop a complete mobile product. (android, iOS, on a single restful layer)</p>
+    <link href="http://yoursite.com/2016/02/04/about-me/"/>
+    <id>http://yoursite.com/2016/02/04/about-me/</id>
+    <published>2016-02-04T08:03:59.695Z</published>
+    <updated>2016-02-04T08:03:59.695Z</updated>
+    <content type="html"><![CDATA[<p>I’m an 19 years old mobile developer from Cluj Napoca, România, developing mobile apps, games, and restful web services.<br>In the nearby future, I’m thinking about getting more into iOS development, with Swift, to achieve one of my goals, being able to develop a complete mobile product. (android, iOS, on a single restful layer)</p>
 <h3 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h3><p>If you have any kind of questions, please send me a email at <a href="mailto:boldijarpaul@gmail.com" target="_blank" rel="external">boldijar.paul@gmail.com</a></p>
 <h2 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h2><ul>
 <li>Java backend developer @<a href="http://www.pentalog.ro/" target="_blank" rel="external">Pentalog</a> (intership)</li>
@@ -101,7 +101,7 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>I’m an 19 years old mobile developer from Cluj Napoca, RomÃ¢nia, developing mobile apps, games, and restful web services.<br>In the nearb]]>
+    <![CDATA[<p>I’m an 19 years old mobile developer from Cluj Napoca, România, developing mobile apps, games, and restful web services.<br>In the nearby]]>
     </summary>
     
   </entry>
