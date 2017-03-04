@@ -1,0 +1,1 @@
+This app is made for the people in Dusseldorf. With this app you can see the newest events in the town, and details about them, and about the organizers.

@@ -1,0 +1,11 @@
+<article class="style$styleNumber">
+									<span class="image">
+										<img src="$image" alt="" />
+									</span>
+									<a href="$page">
+										<h2>$appname</h2>
+										<div class="content">
+											<p>$technologies</p>
+										</div>
+									</a>
+								</article>

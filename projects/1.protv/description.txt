@@ -1,0 +1,3 @@
+This app was made for a TV channel called ProTV. Here you can view shows, news, contests and a lot more about what's happening on the TV.
+I've was fully responsable of the news section of this app, along with push notifications and custom ads, and I also worked on mentainance, bug-fixes, and other change requests.
+It was a great app, and now has around 100k users.
