@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator for IT Professionals</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --background-color: #f5f7fa;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --success-color: #4caf50;
+        }
+
+        .dark-theme {
+            --primary-color: #3a5683;
+            --secondary-color: #0d4b6e;
+            --accent-color: #0288d1;
+            --background-color: #121212;
+            --card-background: #1e1e1e;
+            --text-color: #e0e0e0;
+            --border-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+
+        .calculator-card, .info-card {
+            background-color: var(--card-background);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .calculator-card:hover, .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+
+        .input-section {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
+        }
+
+        .results-section {
+            padding: 25px;
+        }
+
+        .results-section h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .result-category {
+            background-color: rgba(79, 195, 247, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .result-category h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .info-card {
+            padding: 25px;
+        }
+
+        .info-card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .info-card p {
+            margin-bottom: 10px;
+        }
+
+        .info-card ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .info-card li {
+            margin-bottom: 5px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle button {
+            background-color: transparent;
+            color: var(--text-color);
+            padding: 5px;
+            width: auto;
+        }
+
+        .theme-toggle button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .hint {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-top: 5px;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .disclaimer {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-section, .results-section {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .input-section, .results-section, .info-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 data-en="Salary Calculator for IT Professionals" data-ro="Calculator Salariu pentru IT-iști"></h1>
+            <p data-en="Calculate your salary in different periods and currencies" data-ro="Calculează salariul tău în diferite perioade și valute"></p>
+        </header>
+
+        <div id="loading" data-en="Loading exchange rates..." data-ro="Se încarcă cursurile de schimb..."></div>
+
+        <div class="calculator-card" style="display: none;">
+            <div class="input-section">
+                <div class="input-group">
+                    <label for="amount" data-en="Amount" data-ro="Sumă"></label>
+                    <input type="number" id="amount" data-en-placeholder="Enter amount" data-ro-placeholder="Introdu suma" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label for="currency" data-en="Currency" data-ro="Valută"></label>
+                    <select id="currency">
+                        <option value="RON" data-en="RON (Romanian Leu)" data-ro="RON (Lei)"></option>
+                        <option value="EUR" data-en="EUR (Euro)" data-ro="EUR (Euro)"></option>
+                        <option value="USD" data-en="USD (US Dollar)" data-ro="USD (Dolar)"></option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="period" data-en="Period" data-ro="Perioadă"></label>
+                    <select id="period">
+                        <option value="hourly" data-en="Hourly" data-ro="Pe oră"></option>
+                        <option value="daily" data-en="Daily" data-ro="Pe zi"></option>
+                        <option value="monthly" selected data-en="Monthly" data-ro="Lunar"></option>
+                        <option value="yearly" data-en="Yearly" data-ro="Anual"></option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="unpaid-days" data-en="Unpaid leave days per year" data-ro="Zile de concediu neplătite pe an"></label>
+                    <input type="number" id="unpaid-days" data-en-placeholder="Enter number of days" data-ro-placeholder="Introdu numărul de zile" value="0" min="0">
+                    <div class="hint" data-en="Usually 21 paid vacation days per year, plus 15 public holidays in Romania" data-ro="De obicei 21 de zile de concediu plătite pe an, plus 15 zile libere pentru sărbători în România"></div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <h2 data-en="Results" data-ro="Rezultate"></h2>
+                <div class="results-grid">
+                    <div class="result-category">
+                        <h3 data-en="Hourly" data-ro="Pe oră"></h3>
+                        <div class="result-item">
+                            <span>RON:</span>
+                            <span id="hourly-ron">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>EUR:</span>
+                            <span id="hourly-eur">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>USD:</span>
+                            <span id="hourly-usd">-</span>
+                        </div>
+                    </div>
+
+                    <div class="result-category">
+                        <h3 data-en="Daily" data-ro="Pe zi"></h3>
+                        <div class="result-item">
+                            <span>RON:</span>
+                            <span id="daily-ron">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>EUR:</span>
+                            <span id="daily-eur">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>USD:</span>
+                            <span id="daily-usd">-</span>
+                        </div>
+                    </div>
+
+                    <div class="result-category">
+                        <h3 data-en="Monthly" data-ro="Lunar"></h3>
+                        <div class="result-item">
+                            <span>RON:</span>
+                            <span id="monthly-ron">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>EUR:</span>
+                            <span id="monthly-eur">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>USD:</span>
+                            <span id="monthly-usd">-</span>
+                        </div>
+                    </div>
+
+                    <div class="result-category">
+                        <h3 data-en="Yearly" data-ro="Anual"></h3>
+                        <div class="result-item">
+                            <span>RON:</span>
+                            <span id="yearly-ron">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>EUR:</span>
+                            <span id="yearly-eur">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span>USD:</span>
+                            <span id="yearly-usd">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h2 data-en="Information" data-ro="Informații"></h2>
+            <p data-en="This calculator uses the following exchange rates:" data-ro="Acest calculator folosește următoarele rate de conversie:"></p>
+            <ul>
+                <li>1 EUR = <span id="ron-to-eur-rate">Loading...</span> RON</li>
+                <li>1 USD = <span id="ron-to-usd-rate">Loading...</span> RON</li>
+            </ul>
+            <p data-en="Calculations are based on:" data-ro="Calculele sunt bazate pe:"></p>
+            <ul>
+                <li data-en="1 month = 21 working days" data-ro="1 lună = 21 zile lucrătoare"></li>
+                <li data-en="1 day = 8 working hours" data-ro="1 zi = 8 ore de lucru"></li>
+                <li data-en="1 year = 12 months" data-ro="1 an = 12 luni"></li>
+                <li data-en="Unpaid leave days specified by the user" data-ro="Zile de concediu neplătite specificate de utilizator"></li>
+            </ul>
+        </div>
+
+        <div class="disclaimer" data-en="Disclaimer: This calculator is created for informational purposes. The results are gross and do not take into account taxes or other deductions. For important decisions, please consult a professional in the field." data-ro="Disclaimer: Acest calculator este creat în scop informativ. Rezultatele sunt brute și nu iau în considerare taxele sau alte deduceri. Pentru decizii importante, vă rugăm să consultați un profesionist în domeniu."></div>
+
+        <footer>
+            <p>© 2025 <span data-en="Salary Calculator for IT Professionals" data-ro="Calculator salarii pentru IT-iști"></span></p>
+            <a href="mailto:boldijar.paul@gmail.com">Contact</a>
+            <div class="theme-toggle">
+                <span data-en="Theme:" data-ro="Temă:"></span>
+                <button id="theme-toggle-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Exchange rates
+            let exchangeRates = {
+                RON_TO_EUR: 0,
+                RON_TO_USD: 0
+            };
+
+            // Time constants
+            const HOURS_PER_DAY = 8;
+            const DAYS_PER_MONTH = 21;
+            const MONTHS_PER_YEAR = 12;
+
+            // DOM elements
+            const amountInput = document.getElementById('amount');
+            const currencySelect = document.getElementById('currency');
+            const periodSelect = document.getElementById('period');
+            const unpaidDaysInput = document.getElementById('unpaid-days');
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const loadingElement = document.getElementById('loading');
+            const calculatorCard = document.querySelector('.calculator-card');
+            
+            // Localization
+            let currentLanguage = 'en';
+            const isRomania = await checkIfRomania();
+            if (isRomania) {
+                currentLanguage = 'ro';
+                document.documentElement.lang = 'ro';
+            }
+            updateLanguage();
+
+            // Set default currency
+            currencySelect.value = isRomania ? 'RON' : 'EUR';
+
+            // Fetch exchange rates
+            async function fetchExchangeRates() {
+                try {
+                    const response = await fetch('https://api.exchangerate-api.com/v4/latest/RON');
+                    const data = await response.json();
+                    exchangeRates.RON_TO_EUR = 1 / data.rates.EUR;
+                    exchangeRates.RON_TO_USD = 1 / data.rates.USD;
+                    
+                    // Update UI
+                    document.getElementById('ron-to-eur-rate').textContent = exchangeRates.RON_TO_EUR.toFixed(4);
+                    document.getElementById('ron-to-usd-rate').textContent = exchangeRates.RON_TO_USD.toFixed(4);
+                    
+                    loadingElement.style.display = 'none';
+                    calculatorCard.style.display = 'block';
+                    
+                    // Initial calculation
+                    calculateSalary();
+                } catch (error) {
+                    console.error('Error fetching exchange rates:', error);
+                    loadingElement.textContent = currentLanguage === 'ro' ? 'Eroare la încărcarea cursurilor de schimb. Vă rugăm reîncărcați pagina.' : 'Error loading exchange rates. Please reload the page.';
+                }
+            }
+
+            fetchExchangeRates();
+
+            // Set theme based on device preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-theme');
+                themeToggleBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // Theme toggle functionality
+            themeToggleBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                
+                // Update icon
+                const icon = themeToggleBtn.querySelector('i');
+                if (document.body.classList.contains('dark-theme')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+
+            // Add event listeners for real-time calculation
+            [amountInput, currencySelect, periodSelect, unpaidDaysInput].forEach(element => {
+                element.addEventListener('input', calculateSalary);
+                element.addEventListener('change', calculateSalary);
+            });
+
+            function calculateSalary() {
+                // Get input values
+                const amount = parseFloat(amountInput.value) || 0;
+                const currency = currencySelect.value;
+                const period = periodSelect.value;
+                const unpaidDays = parseInt(unpaidDaysInput.value) || 0;
+                
+                // Convert to RON first (base currency)
+                let amountInRON;
+                
+                switch (currency) {
+                    case 'EUR':
+                        amountInRON = amount * exchangeRates.RON_TO_EUR;
+                        break;
+                    case 'USD':
+                        amountInRON = amount * exchangeRates.RON_TO_USD;
+                        break;
+                    default: // RON
+                        amountInRON = amount;
+                }
+                
+                // Calculate for different periods (in RON)
+                let hourlyRON, dailyRON, monthlyRON, yearlyRON;
+                
+                switch (period) {
+                    case 'hourly':
+                        hourlyRON = amountInRON;
+                        dailyRON = hourlyRON * HOURS_PER_DAY;
+                        monthlyRON = dailyRON * DAYS_PER_MONTH;
+                        yearlyRON = monthlyRON * MONTHS_PER_YEAR;
+                        break;
+                    case 'daily':
+                        dailyRON = amountInRON;
+                        hourlyRON = dailyRON / HOURS_PER_DAY;
+                        monthlyRON = dailyRON * DAYS_PER_MONTH;
+                        yearlyRON = monthlyRON * MONTHS_PER_YEAR;
+                        break;
+                    case 'monthly':
+                        monthlyRON = amountInRON;
+                        dailyRON = monthlyRON / DAYS_PER_MONTH;
+                        hourlyRON = dailyRON / HOURS_PER_DAY;
+                        yearlyRON = monthlyRON * MONTHS_PER_YEAR;
+                        break;
+                    case 'yearly':
+                        yearlyRON = amountInRON;
+                        monthlyRON = yearlyRON / MONTHS_PER_YEAR;
+                        dailyRON = monthlyRON / DAYS_PER_MONTH;
+                        hourlyRON = dailyRON / HOURS_PER_DAY;
+                        break;
+                }
+                
+                // Adjust for unpaid days
+                const unpaidAmount = (yearlyRON / (DAYS_PER_MONTH * MONTHS_PER_YEAR)) * unpaidDays;
+                yearlyRON -= unpaidAmount;
+                monthlyRON = yearlyRON / MONTHS_PER_YEAR;
+                dailyRON = monthlyRON / DAYS_PER_MONTH;
+                hourlyRON = dailyRON / HOURS_PER_DAY;
+                
+                // Convert to other currencies
+                const hourlyEUR = hourlyRON / exchangeRates.RON_TO_EUR;
+                const dailyEUR = dailyRON / exchangeRates.RON_TO_EUR;
+                const monthlyEUR = monthlyRON / exchangeRates.RON_TO_EUR;
+                const yearlyEUR = yearlyRON / exchangeRates.RON_TO_EUR;
+                
+                const hourlyUSD = hourlyRON / exchangeRates.RON_TO_USD;
+                const dailyUSD = dailyRON / exchangeRates.RON_TO_USD;
+                const monthlyUSD = monthlyRON / exchangeRates.RON_TO_USD;
+                const yearlyUSD = yearlyRON / exchangeRates.RON_TO_USD;
+                
+                // Display results
+                updateResults('hourly', hourlyRON, hourlyEUR, hourlyUSD);
+                updateResults('daily', dailyRON, dailyEUR, dailyUSD);
+                updateResults('monthly', monthlyRON, monthlyEUR, monthlyUSD);
+                updateResults('yearly', yearlyRON, yearlyEUR, yearlyUSD);
+                
+                // Highlight the input period
+                highlightResults(period);
+            }
+            
+            function updateResults(period, ron, eur, usd) {
+                document.getElementById(`${period}-ron`).textContent = formatCurrency(ron, 'RON');
+                document.getElementById(`${period}-eur`).textContent = formatCurrency(eur, 'EUR');
+                document.getElementById(`${period}-usd`).textContent = formatCurrency(usd, 'USD');
+            }
+            
+            function formatCurrency(amount, currency) {
+                return new Intl.NumberFormat(currentLanguage === 'ro' ? 'ro-RO' : 'en-US', { 
+                    style: 'currency', 
+                    currency: currency,
+                    maximumFractionDigits: 2
+                }).format(amount);
+            }
+            
+            function highlightResults(period) {
+                // Remove highlight from all result categories
+                document.querySelectorAll('.result-category').forEach(category => {
+                    category.style.backgroundColor = 'rgba(79, 195, 247, 0.1)';
+                    category.style.borderLeftColor = 'var(--accent-color)';
+                });
+                
+                // Add highlight to the selected period
+                const selectedCategory = document.querySelector(`.result-category:nth-child(${
+                    period === 'hourly' ? 1 : period === 'daily' ? 2 : period === 'monthly' ? 3 : 4
+                })`);
+                
+                if (selectedCategory) {
+                    selectedCategory.style.backgroundColor = 'rgba(76, 175, 80, 0.1)';
+                    selectedCategory.style.borderLeftColor = 'var(--success-color)';
+                }
+            }
+
+            async function checkIfRomania() {
+                try {
+                    const response = await fetch('https://ipapi.co/json/');
+                    const data = await response.json();
+                    return data.country_code === 'RO';
+                } catch (error) {
+                    console.error('Error checking location:', error);
+                    return false;
+                }
+            }
+
+            function updateLanguage() {
+                document.querySelectorAll('[data-en]').forEach(element => {
+                    element.textContent = element.getAttribute(`data-${currentLanguage}`);
+                });
+                document.querySelectorAll('[data-en-placeholder]').forEach(element => {
+                    element.placeholder = element.getAttribute(`data-${currentLanguage}-placeholder`);
+                });
+                document.querySelectorAll('option').forEach(option => {
+                    if (option.getAttribute(`data-${currentLanguage}`)) {
+                        option.textContent = option.getAttribute(`data-${currentLanguage}`);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
